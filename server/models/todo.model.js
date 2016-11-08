@@ -8,5 +8,5 @@ var todoSchema = new Schema({
   }
 });
 
-var Todo = mongoose.model('Todo', todoSchema);
+var Todo = mongoose.model('Todo', todoSchema); //this line tells mongoose, grab these todo var and make them in your model
 module.exports = Todo;
