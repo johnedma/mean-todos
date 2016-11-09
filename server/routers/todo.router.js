@@ -45,7 +45,18 @@ router.post('/todos', function(req, res){
     });
   });
 });
-router.put('/todos/:id', function(req, res){});
+router.put('/todos/:id', function(req, res){
+  Todo.findOneAndUpdate({_id: req.params.id}, req.body, function(err, oldTodo){
+    if(err){
+      res.status(500).json({
+        err: err
+      });
+    }
+    res.status(200).json({
+      msg: oldTodo
+    });
+  });
+});
 router.delete('/todos/:id', function(req,res){
   Todo.findOneAndRemove({_id: req.params.id }, function(err, deletedTodo){
     if (err) {
