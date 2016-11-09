@@ -19,7 +19,18 @@ router.get('/todos', function(req, res){
     });
   });
 });
-router.get('/todos/:id', function(req,res){});
+router.get('/todos/:id', function(req,res){
+  Todo.find({_id: req.params.id}, function(err, foundTodo){ //searches for db, if found reqparam(actual id) it foundTodo and send as oject
+    if(err){
+      res.status(500).json({
+        err: err
+      });
+    }
+    res.status(200).json({
+      todos: foundTodo
+    });
+  });
+});
 router.post('/todos', function(req, res){
   var todo = new Todo(req.body);
   todo.save(function(err){
@@ -35,6 +46,17 @@ router.post('/todos', function(req, res){
   });
 });
 router.put('/todos/:id', function(req, res){});
-router.delete('/todos/:id', function(req,res){});
+router.delete('/todos/:id', function(req,res){
+  Todo.findOneAndRemove({_id: req.params.id }, function(err, deletedTodo){
+    if (err) {
+      res.status(500).json({
+        err: err
+      });
+    }
+    res.status(200).json({
+      msg: deletedTodo
+    });
+  });
+});
 
 module.exports = router;
