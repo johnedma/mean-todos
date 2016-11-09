@@ -70,4 +70,18 @@ router.delete('/todos/:id', function(req,res){
   });
 });
 
+//descrip
+router.get('/todos/description/:desc', function(req,res){
+  Todo.find({description: req.params.desc}, function(err, foundTodo){ //searches for db, if found reqparam(actual id) it foundTodo and send as oject
+    if(err){
+      res.status(500).json({
+        err: err
+      });
+    }
+    res.status(200).json({
+      todos: foundTodo
+    });
+  });
+});
+
 module.exports = router;
