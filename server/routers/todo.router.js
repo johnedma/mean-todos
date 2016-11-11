@@ -51,20 +51,22 @@ router.put('/todos/:id', function(req, res){
       res.status(500).json({
         err: err
       });
+      next(); //stops the app from running further in the function and crashing app
+
     }
     res.status(200).json({
       msg: oldTodo
     });
   });
 });
-router.delete('/todos/:id', function(req,res){
+router.delete('/todos/:id', function(req,res, next){
   Todo.findOneAndRemove({_id: req.params.id }, function(err, deletedTodo){
     if (err) {
-      res.status(500).json({
+      return res.status(500).json({ //if there is an error "return" stops the function running as it's true
         err: err
       });
     }
-    res.status(200).json({
+    return res.status(200).json({
       msg: deletedTodo
     });
   });
@@ -76,12 +78,14 @@ router.get('/todos/description/:desc', function(req, res){
       res.status(500).json({
         err: err
       });
-    }
+    } else { //another function to end function so app wont crash
       res.status(200).json({
         msg: foundTodos
       });
-
+    }
   });
 });
+
+//3 ways to kill were added because mongoose will occassionaly try to send both msgs and crash app
 
 module.exports = router;
