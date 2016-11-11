@@ -28,8 +28,8 @@
     function getAllTodos(){
       return todos;// all this function does is return todos
     }
-    function createOneTodo(){
-      $http.post('todos', todo)
+    function createOneTodo(todo){
+      $http.post('/todos', todo)
           .then(function(response){
             todos.push(todo);
           })
