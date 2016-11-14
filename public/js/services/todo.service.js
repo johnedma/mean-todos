@@ -37,7 +37,15 @@
             console.log(err);
           });
     }
-    function updateOneTodo(index, todo){}
+    function updateOneTodo(index, todo){
+      $http.put('/todos/' + updatedTodo._id, updatedTodo)
+          .then(function(){
+            todos.splice(index, 1, updatedTodo);
+          })
+          .catch(function(err){
+            console.log(err); //not for fully produced application, only for internal. DONT LEAVE IN for ppl to poke around
+          });
+    }
     function deleteOneTodo(index){}
     return {
 
